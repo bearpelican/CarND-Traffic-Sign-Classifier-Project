@@ -161,7 +161,8 @@ These images are a bit difficult to classify because they are not cropped to sho
 
 The accuracy for the above images is super low - 2 out of 8 correct. 
 
-Predictions seemed to work much better when I manually cropped the images
+Predictions seemed to work much better when I manually cropped the images:
+
 ![alt text][image12] ![alt text][image13] ![alt text][image14] 
 ![alt text][image15] ![alt text][image16] ![alt text][image17]
 ![alt text][image18] ![alt text][image19]
