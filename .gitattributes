@@ -1,3 +1,5 @@
-*.ipynb filter=nbstripout
+# don't strip out for writeup
+# *.ipynb filter=nbstripout
+
 
 *.ipynb diff=ipynb

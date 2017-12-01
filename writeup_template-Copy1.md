@@ -19,24 +19,24 @@ The goals / steps of this project are the following:
 [image1]: ./examples/class_hist.png "Class Histogram"
 [image2]: ./examples/grayscale.jpg "Grayscaling"
 [image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/external_images/12.png "Traffic Sign 1"
-[image5]: ./examples/external_images/15.png "Traffic Sign 2"
-[image6]: ./examples/external_images/1.png "Traffic Sign 3"
-[image7]: ./examples/external_images/22.png "Traffic Sign 4"
-[image8]: ./examples/external_images/25.png "Traffic Sign 5"
-[image9]: ./examples/external_images/30.png "Traffic Sign 6"
-[image10]: ./examples/external_images/38.png "Traffic Sign 7"
-[image11]: ./examples/external_images/40.png "Traffic Sign 8"
+[image4]: ./examples/external_images/orig/12.jpg "Traffic Sign 1"
+[image5]: ./examples/external_images/orig/15.jpg "Traffic Sign 2"
+[image6]: ./examples/external_images/orig/1.jpg "Traffic Sign 3"
+[image7]: ./examples/external_images/orig/22.jpg "Traffic Sign 4"
+[image8]: ./examples/external_images/orig/25.jpg "Traffic Sign 5"
+[image9]: ./examples/external_images/orig/30.jpg "Traffic Sign 6"
+[image10]: ./examples/external_images/orig/38.jpg "Traffic Sign 7"
+[image11]: ./examples/external_images/orig/40.jpg "Traffic Sign 8"
 
 
-[image4]: ./examples/external_images/12.png "Traffic Sign 1"
-[image5]: ./examples/external_images/15.png "Traffic Sign 2"
-[image6]: ./examples/external_images/1.png "Traffic Sign 3"
-[image7]: ./examples/external_images/22.png "Traffic Sign 4"
-[image8]: ./examples/external_images/25.png "Traffic Sign 5"
-[image9]: ./examples/external_images/30.png "Traffic Sign 6"
-[image10]: ./examples/external_images/38.png "Traffic Sign 7"
-[image11]: ./examples/external_images/40.png "Traffic Sign 8"
+[image12]: ./examples/external_images/cropped/12.jpg "Cropped Traffic Sign 1"
+[image13]: ./examples/external_images/cropped/15.jpg "Cropped Traffic Sign 2"
+[image14]: ./examples/external_images/cropped/1.jpg "Cropped Traffic Sign 3"
+[image15]: ./examples/external_images/cropped/22.jpg "Cropped Traffic Sign 4"
+[image16]: ./examples/external_images/cropped/25.jpg "Cropped Traffic Sign 5"
+[image17]: ./examples/external_images/cropped/30.jpg "Cropped Traffic Sign 6"
+[image18]: ./examples/external_images/cropped/38.jpg "Cropped Traffic Sign 7"
+[image19]: ./examples/external_images/cropped/40.jpg "Cropped Traffic Sign 8"
 
 
 ## Rubric Points
@@ -83,30 +83,26 @@ I also did not use data augmentation as I did not have enough time. Though I wou
 
 My final model consisted of the following layers:
 
-| Layer         		|     Description	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-
-|                 Convolutional Block 1	                                        |
+| Layer         		|     Description	        		        			| 
+|:---------------------:|:-----------------------------------------------------:| 
+| Input         		| 32x32x3 RGB image   					        		| 
+| Convolutional Block 1	|:-----------------------------------------------------:|
 | Convolution 2x2     	| 32 depth, 1x1 stride, same padding, outputs 32x32x32	|
 | RELU					|												        |
 | Batch Normalization	|												        |
 | Convolution 2x2     	| 64 depth, 1x1 stride, same padding, outputs 32x32x64	|
 | RELU					|												        |
 | Max pooling	      	| 2x2 stride,  outputs 16x16x64 				        |
-
 | Batch Normalization	|												        |
 | Dropout           	| Keep prob = 0.35								        |
-
-|                 Convolutional Block 2	                                        |
+| Convolutional Block 2	|:-----------------------------------------------------:|
 | Convolution 2x2     	| 32 depth, 1x1 stride, same padding, outputs 16x16x32	|
 | RELU					|												        |
 | Batch Normalization	|												        |
 | Convolution 2x2     	| 64 depth, 1x1 stride, same padding, outputs 16x16x64	|
 | RELU					|												        |
 | Max pooling	      	| 2x2 stride,  outputs 8x8x64 				            |
-
-
+| Dense layers          |:-----------------------------------------------------:|
 | Batch Normalization	|												        |
 | Flatten           	|												        |
 | Fully Connected   	| size = 256									        |
@@ -115,7 +111,7 @@ My final model consisted of the following layers:
 | Fully Connected   	| size = 512									        |
 | Batch Normalization	|												        |
 | Dropout           	| Keep prob = 0.35								        |
-| Fully Connected + Softmax  	| size = 43		    							        |
+| Softmax            	| size = 43		    							|
 
  
 I tried to model it off a simpler version of VGG network with dropout and batch normalization
@@ -156,9 +152,19 @@ Here are five German traffic signs that I found on the web:
 
 ![alt text][image4] ![alt text][image5] ![alt text][image6] 
 ![alt text][image7] ![alt text][image8] ![alt text][image9]
-![alt text][image10] ![alt text][image10]
+![alt text][image10] ![alt text][image11]
 
-These images are a bit difficult to classify because they are not cropped to show the sign only. They also need to be resized to 32 x 32
+These images are a bit difficult to classify because they are not cropped to show the sign only. They also are not square, so become distorted when resized to 32x32
+
+
+####1b. Manual cropping
+
+The accuracy for the above images is super low - 2 out of 8 correct. 
+
+Predictions seemed to work much better when I manually cropped the images
+![alt text][image12] ![alt text][image13] ![alt text][image14] 
+![alt text][image15] ![alt text][image16] ![alt text][image17]
+![alt text][image18] ![alt text][image19]
 
 ####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
@@ -166,33 +172,42 @@ Here are the results of the prediction:
 
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Keep Right      		| Keep Right   									| 
+| Roundabout mandatory	| Roundabout mandatory   						| 
+| Beware Ice/Snow  		| Right-of-Way   						    	| 
+| No Vehicles      		| No Vehicles   								| 
+| Priority road     	| Priority road 								|
+| Bumpy road			| Bumpy road									|
+| Road work             | Road work 					 				|
+| Speed limit			| Speed limit         							|
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 7 of the 8 traffic signs, which gives an accuracy of 87.5. The one that it messed up on - Beware Ice/Snow has the same shape as the Right-of-way sign.
+
+The accuracy for the uncropped versions was 2 out of 8. Pretty poor accuracy
 
 ####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+The code for making predictions on my final model is located in the 34th cell of the Ipython notebook.
 
 For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| 1.0             		| Keep Right   									| 
+| 1.0               	| Roundabout mandatory   						| 
+| 1.0             		| Right-of-Way   						    	| 
+| 1.0             		| No Vehicles   								| 
+| 1.0                	| Priority road 								|
+| 1.0       			| Bumpy road									|
+| 1.0                   | Road work 					 				|
+| 1.0       			| Speed limit         							|
 
 
-For the second image ... 
+I'm not sure why the probabilities are so skewed towards 1 or 0. It could be that I'm overfitting too much.
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
 ####1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
 
+From the convolutional layers, it looks like there are certain filters that activate when it sees different shapes or colors.
 
